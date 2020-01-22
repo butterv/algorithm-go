@@ -1,3 +1,3 @@
-module github.com/istsh/question
+module github.com/istsh/programming-challenges
 
-go 1.12
+go 1.13
