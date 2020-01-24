@@ -1,1 +1,1 @@
-# Programming Challenges
+# Algorithm Go
