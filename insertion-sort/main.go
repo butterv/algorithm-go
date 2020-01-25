@@ -4,15 +4,15 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strconv"
-	"strings"
+
+	"github.com/istsh/algorithm-go/util"
 )
 
 var sc = bufio.NewScanner(os.Stdin)
 
 // echo 5 1 10 4 7 3 6 2 8 9 | go run ./main.go
 func main() {
-	nums, err := read()
+	nums, err := util.ReadIntArray(" ")
 	if err != nil {
 		panic(err)
 	}
@@ -30,22 +30,4 @@ func main() {
 	}
 
 	fmt.Println(nums)
-}
-
-func read() ([]int, error) {
-	var str string
-	if sc.Scan() {
-		str = sc.Text()
-	}
-
-	var nums []int
-	for _, s := range strings.Split(str, " ") {
-		num, err := strconv.Atoi(s)
-		if err != nil {
-			return nil, err
-		}
-		nums = append(nums, num)
-	}
-
-	return nums, nil
 }
