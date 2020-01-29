@@ -12,7 +12,6 @@ type node struct {
 
 type stack struct {
 	nodes []*node
-	count int
 }
 
 // NewStack returns a new stack.
@@ -20,14 +19,20 @@ func NewStack() *stack {
 	return &stack{}
 }
 
+func (s *stack) output() {
+	for _, node := range s.nodes {
+		fmt.Printf("%d ", node.value)
+	}
+	fmt.Println()
+}
+
 func (s *stack) isEmptyStack() bool {
-	return s.count == 0
+	return len(s.nodes) == 0
 }
 
 // push adds a node to the stack.
 func (s *stack) push(n *node) {
-	s.nodes = append(s.nodes[:s.count], n)
-	s.count++
+	s.nodes = append(s.nodes, n)
 }
 
 // pop removes and returns a node from the stack in last to first order.
@@ -35,8 +40,13 @@ func (s *stack) pop() *node {
 	if s.isEmptyStack() {
 		return nil
 	}
-	s.count--
-	return s.nodes[s.count]
+	p := s.nodes[len(s.nodes)-1]
+	tmp := make([]*node, len(s.nodes)-1)
+	for i, node := range s.nodes[:len(s.nodes)-1] {
+		tmp[i] = node
+	}
+	s.nodes = tmp
+	return p
 }
 
 // echo 1 2 3 4 5 6 7 8 9 10 | go run ./main.go
@@ -49,7 +59,7 @@ func main() {
 	s := NewStack()
 	for _, num := range nums {
 		s.push(&node{value: num})
-		fmt.Println(s.nodes)
+		s.output()
 	}
 
 	for i := 0; i < len(nums); i++ {
@@ -57,6 +67,6 @@ func main() {
 		if n == nil {
 			panic(err)
 		}
-		fmt.Println(s.nodes)
+		s.output()
 	}
 }
