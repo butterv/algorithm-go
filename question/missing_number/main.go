@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/istsh/algorithm-go/util"
 )
 
 // Finds missing numbers in a given array of integers.
@@ -26,18 +24,30 @@ func getMissingNumber(nums []int, count int) []int {
 }
 
 func main() {
-	nums, err := util.ReadIntArray(" ")
-	if err != nil {
-		panic(err)
+	data := []struct {
+		nums  []int
+		count int
+	}{
+		{
+			nums:  []int{1, 2, 3, 4, 6},
+			count: 6,
+		},
+		{
+			nums:  []int{1, 2, 3, 4, 6, 7, 9, 8, 10},
+			count: 10,
+		},
+		{
+			nums:  []int{1, 2, 3, 4, 6, 9, 8},
+			count: 10,
+		},
 	}
 
-	var count int
-	fmt.Scanf("%d", &count)
+	for _, d := range data {
+		if len(d.nums) > d.count {
+			panic("invalid args")
+		}
 
-	if len(nums) > count {
-		panic("invalid args")
+		missings := getMissingNumber(d.nums, d.count)
+		fmt.Println(missings)
 	}
-
-	missings := getMissingNumber(nums, count)
-	fmt.Println(missings)
 }
